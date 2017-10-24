@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserProfile
+from .models import UserProfile, ProfileFeedItem
 
 # serializers convert python object into json format and vice versa.
 class HelloSerializer(serializers.Serializer):
@@ -26,3 +26,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+    """A serializer for Profile feed item."""
+
+    class Meta:
+        model = ProfileFeedItem
+        fields = ('id', 'user_profile', 'status_text', 'created_on')
+        extra_kwargs = {'user_profile': {'read_only': True}}
